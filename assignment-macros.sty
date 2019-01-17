@@ -1,0 +1,296 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{assignment-macros}[2016/03/08 v0.1 My package for making assignments]
+
+% Redefine the page margins
+% TODO: Adjust margins to your liking
+\RequirePackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+% TODO: If there are any other article modifications required, add them here.
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{url}
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{mathtools}
+\RequirePackage{amssymb}
+\RequirePackage{bm}
+\RequirePackage{parskip}
+\RequirePackage{bbm}
+\RequirePackage{titling}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage{tabularx,ragged2e,booktabs, multirow}
+\RequirePackage[export]{adjustbox}
+\RequirePackage{atbegshi,picture}
+\RequirePackage{framed}
+\RequirePackage{xifthen}
+\RequirePackage{color}
+\RequirePackage{upgreek}
+\RequirePackage[separate-uncertainty=true]{siunitx}
+\sisetup{group-digits=false,output-exponent-marker=\textsc{e}, bracket-negative-numbers, open-bracket={\text{-}}, close-bracket={}}
+\RequirePackage{enumerate}
+\RequirePackage{cancel}
+\RequirePackage{microtype}
+\RequirePackage{enumitem}
+\RequirePackage{wrapfig}
+\RequirePackage{physics}
+\RequirePackage{pdfpages}
+\RequirePackage{libertine}
+\renewcommand*\rmdefault{cmr}
+\RequirePackage{xparse}
+%\RequirePackage{tikz}
+%\RequirePackage[american]{circuitikz}
+%\RequirePackage{tkz-euclide}
+\RequirePackage{inconsolata}
+\RequirePackage{accents}
+\RequirePackage{polynom}
+%\usetkzobj{all}
+%\usetikzlibrary{calc}
+\addtolength{\jot}{.4em}
+%\usetikzlibrary{arrows,shapes,positioning}
+%\usetikzlibrary{decorations.markings}
+%\tikzstyle arrowstyle=[scale=1]
+%\tikzstyle directed=[postaction={decorate,decoration={markings,
+%mark=at position .65 with {\arrow[arrowstyle]{stealth}}}}]
+%\usetikzlibrary{intersections}
+%\usetikzlibrary{decorations.pathmorphing,shapes}
+%\tikzset{snake it/.style={decorate, decoration=snake}}
+
+\RequirePackage{letltxmacro}
+\LetLtxMacro{\OldSqrt}{\sqrt}
+\newcommand{\ClosedSqrt}[1][\hphantom{3}]{\def\DHLindex{#1}\mathpalette\DHLhksqrt}
+\newcommand*\bold@name{bold}
+\def\DHLhksqrt#1#2{%
+    \setbox0=\hbox{$#1\OldSqrt{#2\,}$}\dimen0=\ht0\relax%
+    \advance\dimen0-0.2\ht0\relax% size of the added box is still 0.2 times ht0
+    \setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+    {\hbox{$#1\expandafter\OldSqrt\expandafter[\DHLindex]{#2\,}$}
+    \lower\ifx\math@version\bold@name0.6pt\else0.4pt\fi\box2}
+}
+% root index positioning and added space at the end, mostly noticeable in inline math mode
+\newcommand*{\csqrt}[2][\ ]{\ClosedSqrt[\leftroot{-2}\uproot{1}#1]{#2}\kern0.1em} 
+
+\NewDocumentCommand{\raisedminus}{m}{%
+  \raisebox{0.2em}{$\m@th#1{-}$}%
+}
+\NewDocumentCommand{\unaryminus}{}{%
+  \mathbin{%
+    \mathchoice{%
+      \raisedminus\scriptstyle
+    }{%
+      \raisedminus\scriptstyle
+    }{%
+      \raisedminus\scriptscriptstyle
+    }{%
+      \raisedminus\scriptscriptstyle
+    }%
+  }%
+}
+
+\newcommand{\studentnumber}[1]{%
+\AtBeginShipoutNext{%
+\AtBeginShipoutUpperLeft{%
+\put(\dimexpr\paperwidth-75pt\relax,-115pt){%
+\makebox[0pt][r]{%
+\mbox{%
+\textup{#1}
+}
+}
+}
+}
+}
+}
+
+\newcommand{\pronewcommand}[2]{\providecommand{#1}{#2}\renewcommand{#1}{#2}}
+
+\newcommand{\T}{\intercal}
+\newcommand{\sqfr}[2]{\sqrt{\frac{#1}{#2}}}
+\newcommand{\e}[1]{\boldsymbol{\mathrm{e}}\ifthenelse{\isempty{#1}}{}{^{#1}}}
+\newcommand{\underdot}{\d}
+\renewcommand{\d}{\differential}
+\newcommand{\dif}{\differential}
+\newcommand{\od}{\derivative}
+\newcommand{\pd}{\pdv}
+\newcommand{\pdl}[3]{\left(\pd{#1}{#2}\right)_{#3}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\iimg}{\bm{\upiota}}
+\newcommand{\mr}{\mathrm}
+\newcommand{\KE}{\mr{KE}}
+
+\newcommand{\ihat}{\hat{\boldsymbol{\mathrm{\i}}}}
+\newcommand{\jhat}{\hat{\boldsymbol{\mathrm{\j}}}}
+\newcommand{\khat}{\hat{\boldsymbol{\mathrm{k}}}}
+\newcommand{\rhat}{\hat{\boldsymbol{\mathrm{r}}}}
+\newcommand{\rhohat}{\hat{\bm{\uprho}}}
+\newcommand{\phihat}{\hat{\bm{\upphi}}}
+\newcommand{\thetahat}{\hat{\bm{\uptheta}}}
+\newcommand{\ehat}{\hat{\bm{\mathrm{e}}}}
+\newcommand{\Evec}{\vec{\bm{E}}}
+\newcommand{\Bvec}{\vec{\bm{B}}}
+\newcommand{\rv}{\bm{r}}
+\newcommand{\vv}{\bm{v}}
+\newcommand{\uv}{\bm{u}}
+\newcommand{\rvf}{\vec{\bm{r}}}
+\newcommand{\vvf}{\vec{\bm{v}}}
+\newcommand{\uvf}{\vec{\bm{u}}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\sgn}{sgn}
+\newcommand{\numberthis}{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\angstrom}{\mbox{\normalfont\AA}}
+\newcommand{\qimpq}{\quad\implies\quad}
+\newcommand{\qqimpqq}{\qquad\implies\qquad}
+\newcommand{\qiffq}{\quad\iff\quad}
+\newcommand{\qqiffqq}{\qquad\iff\qquad}
+\newcommand{\qqtextqq}[1]{\qquad\mathrm{#1}\qquad}
+\newcommand{\qqandqq}{\qqtextqq{and}}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\newcommand{\rad}{\radian}
+\definecolor{codegray}{gray}{0.9}
+\newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+\newcommand*{\equal}{=}
+\renewcommand{\hbar}{\mathchar'26\mkern-8mu \mathrm{\textbf{h}}}
+\renewcommand{\c}{\mathrm{\textbf{c}}}
+\newcommand{\coloneqq}{\vcentcolon=}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\lagrangian}{\lagr}
+
+\newcommand{\nfrac}[2]{\frac{\raisebox{-.5ex}{$\displaystyle{#1}$}}{#2}}
+
+\DeclareMathOperator\arcsinh{arcsinh}
+\DeclareMathOperator\arccosh{arccosh}
+\DeclareMathOperator\arctanh{arctanh}
+\DeclareMathOperator\arccsch{arccsch}
+\DeclareMathOperator\arcsech{arcsech}
+\DeclareMathOperator\arccoth{arccoth}
+\DeclareMathOperator\hypot{hypot}
+
+% Differentials
+\newcommand{\da}{\dif{a}}
+\newcommand{\db}{\dif{b}}
+\newcommand{\dc}{\dif{c}}
+\renewcommand{\dd}{\dif{d}}
+\newcommand{\de}{\dif{e}}
+\newcommand{\df}{\dif{f}}
+\newcommand{\dg}{\dif{g}}
+\renewcommand{\dh}{\dif{h}}
+\newcommand{\di}{\dif{i}}
+\renewcommand{\dj}{\dif{j}}
+\newcommand{\dk}{\dif{k}}
+\newcommand{\dl}{\dif{l}}
+\newcommand{\dm}{\dif{m}}
+\newcommand{\dn}{\dif{n}}
+\renewcommand{\do}{\dif{o}}
+%\renewcommand{\dp}{\dif{p}} % can't do this bc \dp is a primitive
+\newcommand{\dq}{\dif{q}}
+\newcommand{\dr}{\dif{r}}
+\newcommand{\ds}{\dif{s}}
+\newcommand{\dt}{\dif{t}}
+\newcommand{\du}{\dif{u}}
+\providecommand{\dv}{\dif{v}}
+\renewcommand{\dv}{\dif{v}}
+\newcommand{\dw}{\dif{w}}
+\newcommand{\dx}{\dif{x}}
+\newcommand{\dy}{\dif{y}}
+\newcommand{\dz}{\dif{z}}
+
+\newcommand{\dA}{\dif{A}}
+\newcommand{\dB}{\dif{B}}
+\newcommand{\dC}{\dif{C}}
+\newcommand{\dD}{\dif{D}}
+\newcommand{\dE}{\dif{E}}
+\newcommand{\dF}{\dif{F}}
+\newcommand{\dG}{\dif{G}}
+\newcommand{\dH}{\dif{H}}
+\newcommand{\dI}{\dif{I}}
+\newcommand{\dJ}{\dif{J}}
+\newcommand{\dK}{\dif{K}}
+\newcommand{\dL}{\dif{L}}
+\newcommand{\dM}{\dif{M}}
+\newcommand{\dN}{\dif{N}}
+\newcommand{\dO}{\dif{O}}
+\newcommand{\dP}{\dif{P}}
+\newcommand{\dQ}{\dif{Q}}
+\newcommand{\dR}{\dif{R}}
+\newcommand{\dS}{\dif{S}}
+\newcommand{\dT}{\dif{T}}
+\newcommand{\dU}{\dif{U}}
+\newcommand{\dV}{\dif{V}}
+\newcommand{\dW}{\dif{W}}
+\newcommand{\dX}{\dif{X}}
+\newcommand{\dY}{\dif{Y}}
+\newcommand{\dZ}{\dif{Z}}
+
+\newcommand{\dtheta}{\dif{\theta}}
+\newcommand{\dphi}{\dif{\phi}}
+\newcommand{\drho}{\dif{\rho}}
+\newcommand{\dmu}{\dif{\mu}}
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+
+\newtheoremstyle{myStyleSC}
+  {10pt} % Space above
+  {10pt} % Space below
+  {\itshape} % Body font
+  {} % Indent amount
+  {\libertine\bfseries\scshape} % Theorem head font
+  {.} % Punctuation after theorem head
+  {.5em} % Space after theorem head
+  {} % Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{myStyleSC}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{\textsc{Definition}}
+\newtheorem{lemma}[theorem]{\textsc{Lemma}}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{algorithm}[theorem]{Algorithm}
+
+\newtheorem*{definition*}{Definition}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem*{algorithm*}{Algorithm}
+
+\newtheoremstyle{myStyleIT}
+  {10pt} % Space above
+  {10pt} % Space below
+  {} % Body font
+  {} % Indent amount
+  {\itshape} % Theorem head font
+  {.} % Punctuation after theorem head
+  {.5em} % Space after theorem head
+  {} % Theorem head spec (can be left empty, meaning `normal')
+\theoremstyle{myStyleIT}
+
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{postulate}[theorem]{Postulate}
+\newtheorem{identity}[theorem]{Identity}
+\newtheorem{paradox}[theorem]{Paradox}
+
+\newtheorem*{conjecture*}{Conjecture}
+\newtheorem*{claim*}{Claim}
+\newtheorem*{axiom*}{Axiom}
+\newtheorem*{postulate*}{Postulate}
+\newtheorem*{identity*}{Identity}
+\newtheorem*{paradox*}{Paradox}
+\newtheorem*{exercise*}{Exercise}
+\newtheorem*{fact*}{Fact}
+\newtheorem*{conclusion*}{Conclusion}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{note*}{Note}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\allowdisplaybreaks
+
+\setlength{\droptitle}{-1in}
